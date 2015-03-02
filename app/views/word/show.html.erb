@@ -1,0 +1,37 @@
+<h1><%= @results['word'] %><h1>
+
+<%# Make sure pronunciation not nil#%>
+<% unless @results['pronunciation'].nil?%>
+	<%pronounced = @results['pronunciation']['all']%>
+<%end%>
+
+<h3>/<%= pronounced %>/</h3>
+
+<h1>Actually Fucking Means:</h1>
+
+<%# Go through and display each result#%>
+<%@results['results'].each_with_index do |array, num | %>
+	
+	<%# we want the item numbers to start from 1 #%>
+	<% num = num + 1  %>
+
+	<%# Make sure part of speach is not nil#%>
+	<% unless array['partOfSpeech'].nil? %>
+		<% pOf = '(' + array['partOfSpeech'] +')' %>
+	<% end %>
+	
+	<%# Display number and definition#%>
+	<h2><p><%= num -%>.<i><%=pOf%></i>  <%=array['definition']%></p></h2>
+	
+	<%# Make sure example is not nil#%>
+	<% unless array['examples'].nil? %>
+		<% example = "Example: " + array['examples'][0]%>
+	<%end%>
+
+	<%# Display Example #%>	
+	<h3><%= example %></h3><br/>
+
+<%end%>
+
+<h2> Search another word <h2/>
+<%= render 'search_bar' %>
